@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Travel Bucketlist App{% endblock %}
+
+{% block body %}
+<h1>~ Welcome {{ user }}! Are you ready to Travel? ~</h1>
+
+<div class="navbar"></div>
+
+<h3>If so, begin by choosing your destination below.</h3>
+<form action="/destination" method="POST">
+    <p>
+        Enter Location: <input type="text" name="location">
+    </p>
+    <p>
+        <button id="location-button">Let's Go!</button>
+    </p>
+    <div>
+        ** If you do not the city you would like to travel to - we are adding more currently! **
+    </div>
+</form>
+{% endblock %}
+
+{% block after_body %}
+<link rel="stylesheet" href="/static/style.css"/>
+{% endblock %}
