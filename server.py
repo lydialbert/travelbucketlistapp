@@ -5,6 +5,7 @@ from jinja2 import StrictUndefined
 
 import requests
 import json
+import secrets.sh
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -65,7 +66,7 @@ def bucketlist():
     category2 = session.get('category2')
     category3 = session.get('category3')
 
-    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=24.4165267,75.833981&radius=10&types=restaurant&key=AIzaSyBs-5B4T10BXz6x6VwagOT3sZqelFpg_kc"
+    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=API_KEY"
     payload = {}
     headers = {}
 
