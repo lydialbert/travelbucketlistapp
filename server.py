@@ -5,7 +5,6 @@ from jinja2 import StrictUndefined
 
 import requests
 import json
-import secrets.sh
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -50,8 +49,53 @@ def travelcategories():
     session['category2'] = category2
     session['category3'] = category3
 
+    """Can I put all the information below in another python file and import that into this file?"""
+
+    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&types=food&name=harbour&key=AIzaSyATYk66toeHx7smEeVhhWw-fI-iNTNUnXw"
+
+    payload = {}
+    headers = {}
+
+    response = requests.request("GET", url, headers=headers, data=payload)
+    search_results = response.json()
+    results = search_results['results']
+
+    places_list = []
+    for result in results:
+        place = result['name']
+        places_list.append(place)
+    
+    place_1 = places_list[0]
+    place_2 = places_list[1]
+    place_3 = places_list[2]
+    place_4 = places_list[3]
+    place_5 = places_list[4]
+
+    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&types=museum&name=harbour&key=AIzaSyATYk66toeHx7smEeVhhWw-fI-iNTNUnXw"
+
+    payload = {}
+    headers = {}
+
+    response = requests.request("GET", url, headers=headers, data=payload)
+    search_results = response.json()
+    results = search_results['results']
+    print(results[0]['name'])
+    museum_list = []
+    for result in results:
+        museum = result['name']
+        museum_list.append(museum)
+    print(museum_list)
+
+    mus_1 = museum_list[0]
+    mus_2 = museum_list[1]
+    mus_3 = museum_list[2]
+    mus_4 = museum_list[3]
+    mus_5 = museum_list[4]
+
+
     return render_template('suggestions.html', category1=category1, 
-    category2=category2, category3=category3)
+    category2=category2, category3=category3, place_1=place_1, place_2=place_2, place_3=place_3, 
+    place_4=place_4, place_5=place_5, mus_1=mus_1, mus_2=mus_2, mus_3=mus_3, mus_4=mus_4, mus_5=mus_5)
 
 
 @app.route('/bucketlist', methods=['POST'])
@@ -66,22 +110,9 @@ def bucketlist():
     category2 = session.get('category2')
     category3 = session.get('category3')
 
-    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=API_KEY"
-    payload = {}
-    headers = {}
-
-    response = requests.request("GET", url, headers=headers, data=payload)
-    data = response.json()
-
-    if 'short_name' in data:
-        place = data['long_name']
-    else:
-        place = []
-
-
     return render_template('bucketlist.html', category1=category1, 
     category2=category2, category3=category3, category1_items=category1_items, 
-    category2_items=category2_items, category3_items=category3_items, place=place, data=data)
+    category2_items=category2_items, category3_items=category3_items)
 
 
 if __name__ == "__main__":
