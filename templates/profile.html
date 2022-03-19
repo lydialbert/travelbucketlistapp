@@ -1,22 +1,68 @@
 {% extends 'base.html' %}
 {% block title %}Travel Bucketlist App{% endblock %}
 
+{% block head %}
+<script src="/static/eventlisteners.js"></script>
+{% endblock %}
+
+
 {% block body %}
 <h1>~ Welcome {{ user }}! Are you ready to Travel? ~</h1>
 
-<div class="navbar"></div>
-
 <h3>If so, begin by choosing your destination below.</h3>
-<form action="/destination" method="POST">
+<form action="/travelform" method="POST">
     <p>
-        Enter Location: <input type="text" name="location">
-    </p>
-    <p>
-        <button id="location-button">Let's Go!</button>
+        Enter Location: <input type="text" name="location" />
     </p>
     <div>
         ** If you do not the city you would like to travel to - we are adding more currently! **
     </div>
+    <h2>Then, choose your Top 3 Travel Categories:</h2>
+    <div>
+    <select name="category1">
+        <option value="Restaurants">Food and Drinks</option> 
+        <option value="Park">Nature and Parks</option> 
+        <option value="Nightlife">Nightlife</option>
+        <option value="Musuems">Musuems and Art</option>
+        <option value="History">Historical Sites</option>
+        <option value="Shopping">Shopping</option>
+        <option value="Landmark">Sights and Landmarks</option>
+        <option value="Stadium">Concerts and Shows</option>
+        <option value="tourist_attraction">Tourist Attractions</option>
+        <option value="natural_feature">Day Trip Activities</option>
+    </select>
+    </div>
+    <div>
+    <select name="category2">
+        <option value="Restaurants">Food and Drinks</option> 
+        <option value="Park">Nature and Parks</option> 
+        <option value="Nightlife">Nightlife</option>
+        <option value="Musuems">Musuems and Art</option>
+        <option value="History">Historical Sites</option>
+        <option value="Shopping">Shopping</option>
+        <option value="Landmark">Sights and Landmarks</option>
+        <option value="Stadium">Concerts and Shows</option>
+        <option value="tourist_attraction">Tourist Attractions</option>
+        <option value="natural_feature">Day Trip Activities</option>
+    </select>
+    </div>
+    <div>
+    <select name="category3">
+        <option value="Restaurants">Food and Drinks</option> 
+        <option value="Park">Nature and Parks</option> 
+        <option value="Nightlife">Nightlife</option>
+        <option value="Musuems">Musuems and Art</option>
+        <option value="History">Historical Sites</option>
+        <option value="Shopping">Shopping</option>
+        <option value="Landmark">Sights and Landmarks</option>
+        <option value="Stadium">Concerts and Shows</option>
+        <option value="tourist_attraction">Tourist Attractions</option>
+        <option value="natural_feature">Day Trip Activities</option>
+    </select>
+    </div>
+    <p>
+        <button id="location-button">Let's Go!</button>
+    </p>
 </form>
 {% endblock %}
 

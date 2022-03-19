@@ -1,26 +1,27 @@
 """Server for Travel Bucketlist App."""
 
 from flask import Flask, render_template, request, session
-from jinja2 import StrictUndefined
 
+import os
 import requests
-import json
 
 app = Flask(__name__)
-app.secret_key = "dev"
-app.jinja_env.undefined = StrictUndefined
+app.secret_key = "SECRET"
+
+API_KEY = os.environ['GOOGLE_PLACES_KEY']
+
 
 
 @app.route('/')
 def loginpage():
-    """View login page."""
+    """View the Welcome/Login page."""
 
     return render_template('login.html')
 
 
-@app.route('/login', methods=['POST'])
+@app.route('/profile', methods=['POST'])
 def userprofile():
-    """View a User's Profile Page."""
+    """View the User's Profile Page."""
 
     user = request.form.get("name")
     email = request.form.get("email")
@@ -29,90 +30,90 @@ def userprofile():
     return render_template('profile.html', user=user)
 
 
-@app.route('/destination', methods=['POST'])
-def categories():
-    """View the Categories Form Page."""
-
-    location = request.form.get("location")
-
-    return render_template('destination.html', location=location)
-
-@app.route('/travel', methods=['POST'])
+@app.route('/travelform', methods=['POST'])
 def travelcategories():
     """View the Suggested Travel Items Page."""
+
+    location = request.form.get("location")
 
     category1 = request.form.get("category1")
     category2 = request.form.get("category2")
     category3 = request.form.get("category3")
     
+    session['location'] = location
     session['category1'] = category1
     session['category2'] = category2
     session['category3'] = category3
 
-    """Can I put all the information below in another python file and import that into this file?"""
+    """Google Places API Request for Category 1."""
 
-    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&types=food&name=harbour&key=AIzaSyATYk66toeHx7smEeVhhWw-fI-iNTNUnXw"
-
-    payload = {}
-    headers = {}
-
-    response = requests.request("GET", url, headers=headers, data=payload)
-    search_results = response.json()
-    results = search_results['results']
-
-    places_list = []
-    for result in results:
-        place = result['name']
-        places_list.append(place)
+    url = f"https://maps.googleapis.com/maps/api/place/textsearch/json?query={category1}%20in%20{location}&key={API_KEY}"
     
-    place_1 = places_list[0]
-    place_2 = places_list[1]
-    place_3 = places_list[2]
-    place_4 = places_list[3]
-    place_5 = places_list[4]
-
-    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&types=museum&name=harbour&key=AIzaSyATYk66toeHx7smEeVhhWw-fI-iNTNUnXw"
-
     payload = {}
     headers = {}
 
     response = requests.request("GET", url, headers=headers, data=payload)
     search_results = response.json()
     results = search_results['results']
-    print(results[0]['name'])
-    museum_list = []
+
+    category1_list = []
     for result in results:
-        museum = result['name']
-        museum_list.append(museum)
-    print(museum_list)
+        item = result['name']
+        category1_list.append(item)
+    category1_items = category1_list[:5]
 
-    mus_1 = museum_list[0]
-    mus_2 = museum_list[1]
-    mus_3 = museum_list[2]
-    mus_4 = museum_list[3]
-    mus_5 = museum_list[4]
+    """Google Places API Request for Category 2."""
 
+    url = f"https://maps.googleapis.com/maps/api/place/textsearch/json?query={category2}%20in%20{location}&key={API_KEY}"
+    
+    payload = {}
+    headers = {}
 
-    return render_template('suggestions.html', category1=category1, 
-    category2=category2, category3=category3, place_1=place_1, place_2=place_2, place_3=place_3, 
-    place_4=place_4, place_5=place_5, mus_1=mus_1, mus_2=mus_2, mus_3=mus_3, mus_4=mus_4, mus_5=mus_5)
+    response = requests.request("GET", url, headers=headers, data=payload)
+    search_results = response.json()
+    results = search_results['results']
+    category2_list = []
+    for result in results:
+        item = result['name']
+        #photo = result['photo_reference']
+        category2_list.append(item)
+    category2_items = category2_list[:5]
+
+    """Google Places API Request for Category 3."""
+
+    url = f"https://maps.googleapis.com/maps/api/place/textsearch/json?query={category3}%20in%20{location}&key={API_KEY}"
+    
+    payload = {}
+    headers = {}
+
+    response = requests.request("GET", url, headers=headers, data=payload)
+    search_results = response.json()
+    results = search_results['results']
+    category3_list = []
+    for result in results:
+        item = result['name']
+        category3_list.append(item)
+    category3_items = category3_list[:5]
+
+    return render_template('travelpicks.html', location=location, category1=category1, category2=category2, category3=category3,
+    category1_items=category1_items, category2_items=category2_items, category3_items=category3_items)
 
 
 @app.route('/bucketlist', methods=['POST'])
 def bucketlist():
     """View the final Bucketlist!"""
     
-    category1_items = request.form.getlist("category1_items")
-    category2_items = request.form.getlist("category2_items")
-    category3_items = request.form.getlist("category3_items")
-    
+    category1_items = request.form.getlist("category1")
+    category2_items = request.form.getlist("category2")
+    category3_items = request.form.getlist("category3")
+
+    location = session.get('location')
     category1 = session.get('category1')
     category2 = session.get('category2')
     category3 = session.get('category3')
 
-    return render_template('bucketlist.html', category1=category1, 
-    category2=category2, category3=category3, category1_items=category1_items, 
-    category2_items=category2_items, category3_items=category3_items)
+    return render_template('bucketlist.html', location=location, category1=category1, category2=category2, category3=category3,
+    category1_items=category1_items, category2_items=category2_items, category3_items=category3_items)
 
 
 if __name__ == "__main__":

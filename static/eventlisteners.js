@@ -11,3 +11,9 @@ addButton.addEventListener('click', (evt) => {
 
     alert('Added to Your Bucketlist!')
 });
+
+function mounted() {
+    new google.maps.places.Autocomplete(
+        document.getElementById("autocomplete")
+    )
+};

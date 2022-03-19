@@ -2,13 +2,14 @@
 {% block title %}Travel Bucketlist App{% endblock %}
 
 {% block body %}
-  <h1>This is the page where the user will see their finalized bucketlist!</h1>
-
-  <h2>Here is your bucketlist!</h2>
-
+  <h1>~ Your OFFICIAL {{ location }} BUCKETLIST! ~</h1>
   <h3>{{ category1 }}</h3>
   <div>
-    {{ category1_items }}
+  {% for place in category1_items %}
+    <p>
+      {{ place }}
+    </p>
+  {% endfor %}
   </div>
   
   <h3>{{ category2 }}</h3>
@@ -21,6 +22,7 @@
     {{ category3_items }}
   </div>
 
+  <br>
   <h3>Would you like to make another bucketlist?</h3>
-  <a href="http://10.0.0.30:5000/login">You can return to your homepage here.</a>
+  <a href="http://localhost:5000/profile">Return to Your Profile Page here.</a>
 {% endblock %}
