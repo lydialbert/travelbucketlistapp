@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Travel Bucketlist App{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="/static/style.css"/>
+<style>
+  h1 {
+  text-align: center;
+  }
+</style>
+{% endblock %}
+
+{% block body %}
+  <h1>My Bucket Lists! &#128221; </h1>
+  <div class="nav">
+    <ul>
+        <li><a href="/home">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/mybucketlists">My Bucketlists</a></li>
+        <li><a href="/createbucketlist">Create a New Bucketlist!</a></li>
+    </ul>
+  </div>
+
+  <br>
+  
+<div class="list">
+  <ul>
+    {% for bucketlist in bucketlists %}
+    <div id="div{{ bucketlist.bucketlist_id }}">
+      <li> <a href="/bucketlist/{{ bucketlist.bucketlist_id }}"> {{ bucketlist.location }}</a> 
+      </li>
+      <p> 
+        <button class="customize_button">Customize</button>
+      </p>
+      <p> 
+        <button class="delete_button" id="{{ bucketlist.bucketlist_id }}">Delete</button>
+      </p>
+    </div>
+    {% endfor %}
+  </ul>
+</div>
+
+<script src="/static/editbucketlist.js"></script>
+{% endblock %}

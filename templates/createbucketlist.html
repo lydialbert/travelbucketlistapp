@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block title %}Travel Bucketlist App{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="/static/style.css"/>
+<style>
+    body {
+      background-image: url('https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/beautiful-oia-royalty-free-image-1570210636.jpg');
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    h1 {
+    text-align: center;
+    }
+    h3 {
+    text-align: center;
+    }
+    li a {
+      text-align: center;
+    }
+  </style>
+{% endblock %}
+
+{% block body %}
+<h1>~ Hey! Are you ready to Travel? ~</h1>
+
+<div class="nav">
+    <ul>
+        <li><a href="/home">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/mybucketlists">My Bucketlists</a></li>
+        <li><a href="/createbucketlist">Create a New Bucketlist!</a></li>
+    </ul>
+  </div>
+
+<div class="travelparent">
+    <h2>First, Pick Your Destination.</h2>
+    <form action="/travelform" method="POST">
+        <p>
+            Enter Location: <input type="text" name="location" />
+        </p>
+    <h2>Second, Choose Your Categories:</h2>
+        <div>
+        <select name="category1">
+            <option value="" disabled selected hidden>Choice #1</option>
+            <option value="Restaurants">Food and Drinks</option> 
+            <option value="Park">Nature and Parks</option> 
+            <option value="Nightlife">Nightlife</option>
+            <option value="Museums">Museums and Art</option>
+            <option value="History">Historical Sites</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Landmark">Sights and Landmarks</option>
+            <option value="Stadium">Concerts and Shows</option>
+            <option value="tourist_attraction">Tourist Attractions</option>
+            <option value="natural_feature">Day Trip Activities</option>
+        </select>
+        </div>
+        <div>
+        <select name="category2">
+            <option value="" disabled selected hidden>Choice #2</option>
+            <option value="Restaurants">Food and Drinks</option> 
+            <option value="Park">Nature and Parks</option> 
+            <option value="Nightlife">Nightlife</option>
+            <option value="Museums">Museums and Art</option>
+            <option value="History">Historical Sites</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Landmark">Sights and Landmarks</option>
+            <option value="Stadium">Concerts and Shows</option>
+            <option value="tourist_attraction">Tourist Attractions</option>
+            <option value="natural_feature">Day Trip Activities</option>
+        </select>
+        </div>
+        <div>
+        <select name="category3">
+            <option value="" disabled selected hidden>Choice #3</option>
+            <option value="Restaurants">Food and Drinks</option> 
+            <option value="Park">Nature and Parks</option> 
+            <option value="Nightlife">Nightlife</option>
+            <option value="Museums">Museums and Art</option>
+            <option value="History">Historical Sites</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Landmark">Sights and Landmarks</option>
+            <option value="Stadium">Concerts and Shows</option>
+            <option value="tourist_attraction">Tourist Attractions</option>
+            <option value="natural_feature">Day Trip Activities</option>
+        </select>
+        </div>
+        <p>
+            <button id="categories_btn">Let's Go!</button>
+        </p>
+    </form>
+</div>
+{% endblock %}

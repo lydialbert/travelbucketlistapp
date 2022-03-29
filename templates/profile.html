@@ -2,70 +2,38 @@
 {% block title %}Travel Bucketlist App{% endblock %}
 
 {% block head %}
-<script src="/static/eventlisteners.js"></script>
+<link rel="stylesheet" href="/static/style.css"/>
+<style>
+    body {
+      background-image: url('https://assets.traveltriangle.com/blog/wp-content/uploads/2016/07/limestone-rock-phang-nga-1-Beautiful-limestone-rock-in-the-ocean.jpg');
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    h1 {
+    text-align: center;
+    }
+    h3 {
+    text-align: center;
+    }
+    li a {
+      text-align: center;
+    }
+  </style>
 {% endblock %}
-
 
 {% block body %}
 <h1>~ Welcome {{ user }}! Are you ready to Travel? ~</h1>
-
-<h3>If so, begin by choosing your destination below.</h3>
-<form action="/travelform" method="POST">
-    <p>
-        Enter Location: <input type="text" name="location" />
-    </p>
-    <div>
-        ** If you do not the city you would like to travel to - we are adding more currently! **
-    </div>
-    <h2>Then, choose your Top 3 Travel Categories:</h2>
-    <div>
-    <select name="category1">
-        <option value="Restaurants">Food and Drinks</option> 
-        <option value="Park">Nature and Parks</option> 
-        <option value="Nightlife">Nightlife</option>
-        <option value="Musuems">Musuems and Art</option>
-        <option value="History">Historical Sites</option>
-        <option value="Shopping">Shopping</option>
-        <option value="Landmark">Sights and Landmarks</option>
-        <option value="Stadium">Concerts and Shows</option>
-        <option value="tourist_attraction">Tourist Attractions</option>
-        <option value="natural_feature">Day Trip Activities</option>
-    </select>
-    </div>
-    <div>
-    <select name="category2">
-        <option value="Restaurants">Food and Drinks</option> 
-        <option value="Park">Nature and Parks</option> 
-        <option value="Nightlife">Nightlife</option>
-        <option value="Musuems">Musuems and Art</option>
-        <option value="History">Historical Sites</option>
-        <option value="Shopping">Shopping</option>
-        <option value="Landmark">Sights and Landmarks</option>
-        <option value="Stadium">Concerts and Shows</option>
-        <option value="tourist_attraction">Tourist Attractions</option>
-        <option value="natural_feature">Day Trip Activities</option>
-    </select>
-    </div>
-    <div>
-    <select name="category3">
-        <option value="Restaurants">Food and Drinks</option> 
-        <option value="Park">Nature and Parks</option> 
-        <option value="Nightlife">Nightlife</option>
-        <option value="Musuems">Musuems and Art</option>
-        <option value="History">Historical Sites</option>
-        <option value="Shopping">Shopping</option>
-        <option value="Landmark">Sights and Landmarks</option>
-        <option value="Stadium">Concerts and Shows</option>
-        <option value="tourist_attraction">Tourist Attractions</option>
-        <option value="natural_feature">Day Trip Activities</option>
-    </select>
-    </div>
-    <p>
-        <button id="location-button">Let's Go!</button>
-    </p>
+<div class="nav">
+  <ul>
+      <li><a href="/home">Home</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/mybucketlists">My Bucketlists</a></li>
+      <li><a href="/createbucketlist">Create a New Bucketlist!</a></li>
+  </ul>
+</div>
+<form action="/logout" method="POST">
+  <p> 
+    <button id="logout_button">Log Out</button>
+  </p>
 </form>
-{% endblock %}
-
-{% block after_body %}
-<link rel="stylesheet" href="/static/style.css"/>
 {% endblock %}

@@ -1,28 +1,78 @@
 {% extends 'base.html' %}
 {% block title %}Travel Bucketlist App{% endblock %}
 
+{% block head %}
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<link rel="stylesheet" type="text/css" href="/static/style.css"/>
+<style>
+  h1 {
+  text-align: center;
+  }
+  h3 {
+  text-align: center;
+  }
+  p {
+    text-align: center;
+  }
+</style>
+{% endblock %}
+
 {% block body %}
-  <h1>~ Your OFFICIAL {{ location }} BUCKETLIST! ~</h1>
+  <h1>~ {{ location }} ~</h1>
+
+  <div class="nav">
+    <ul>
+        <li><a href="/home">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/mybucketlists">My Bucketlists</a></li>
+        <li><a href="/createbucketlist">Create a New Bucketlist!</a></li>
+    </ul>
+  </div>
+
+  {% if category1_items == [] %}
+    <div></div>
+  {% else %}
   <h3>{{ category1 }}</h3>
   <div>
-  {% for place in category1_items %}
+  {% for item in category1_items %}
     <p>
-      {{ place }}
+      {{ item }}
     </p>
   {% endfor %}
   </div>
-  
+  {% endif %}
+
+  {% if category2_items == [] %}
+    <div></div>
+  {% else %}
   <h3>{{ category2 }}</h3>
   <div>
-    {{ category2_items }}
+    {% for item in category2_items %}
+      <p>
+        {{ item }}
+      </p>
+    {% endfor %}
   </div>
+  {% endif %}
 
+  {% if category3_items == [] %}
+    <div></div>
+  {% else %}
   <h3>{{ category3 }}</h3>
   <div>
-    {{ category3_items }}
+    {% for item in category3_items %}
+      <p>
+        {{ item }}
+      </p>
+    {% endfor %}
   </div>
+  {% endif %}
 
-  <br>
-  <h3>Would you like to make another bucketlist?</h3>
-  <a href="http://localhost:5000/profile">Return to Your Profile Page here.</a>
+  <div id="map"></div>
+  <script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVSRqldNk1Cg3JJqg3YWhGRQ4SbjWFbRo&callback=initMap&v=weekly"
+  async>
+  </script>
+
+<script src="/static/map.js"></script>
 {% endblock %}

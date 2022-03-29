@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %}Travel Bucketlist App{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="/static/style.css">
+{% endblock %}
+
+{% block body %}
+  <h1>~ The BEST Suggestions for {{ location }}! ~</h1>
+
+  <form action="/bucketlist" method="POST">
+    
+    {% if category1_items == [] %}
+      <h2>Sorry, there are no suggestions for {{ category1 }}</h2>
+    {% else %}
+    <h2>Pick Your {{ category1 }} Options:</h2>
+    <input type="hidden" name="category1name" value="{{ category1 }}">
+    {% for item in category1_test %} 
+      <h3>{{ item[0] }}</h3>
+      <img src="{{ item[1] }}">
+      <p>
+        <input type="checkbox" name="category1" value="{{ item[0] }}" id="add-button">
+        <label for="category1">Add</label>
+      </p> 
+    {% endfor %}
+    {% endif %}
+
+
+    {% if category2_items == [] %}
+      <h2>Sorry, there are no suggestions for {{ category2 }}</h2>
+    {% else %}
+    <h2>Pick Your {{ category2 }} Options:</h2>
+    <input type="hidden" name="category2name" value="{{ category2 }}">
+    {% for item in category2_test %} 
+      <h3>{{ item[0] }}</h3>
+      <img src="{{ item[1] }}">
+      <p>
+        <input type="checkbox" name="category2" value="{{ item[0] }}" id="add-button">
+        <label for="category2">Add</label>
+      </p> 
+    {% endfor %}
+    {% endif %}
+
+
+    {% if category3_items == [] %}
+      <h2>Sorry, there are no suggestions for {{ category3 }}</h2>
+    {% else %}
+    <h2>Pick Your {{ category2 }} Options:</h2>
+    <input type="hidden" name="category3name" value="{{ category3 }}">
+    {% for item in category3_test %} 
+      <h3>{{ item[0] }}</h3>
+      <img src="{{ item[1] }}">
+      <p>
+        <input type="checkbox" name="category3" value="{{ item[0] }}" id="add-button">
+        <label for="category3">Add</label>
+      </p> 
+    {% endfor %}
+    {% endif %}
+      <p> 
+        <button id="bucketlist_button">Make my bucketlist!</button>
+      </p>
+  </form>
+
+  <script src="/static/addbuttons.js"></script>
+{% endblock %}
