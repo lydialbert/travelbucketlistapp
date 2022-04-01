@@ -103,6 +103,21 @@ def travelcategories():
     session['category2'] = category2
     session['category3'] = category3
 
+
+    """Get the lat/lng of the Location."""
+    url = f"https://maps.googleapis.com/maps/api/geocode/json?address={location}&key={API_KEY}"
+    payload = {}
+    headers = {}
+    response = requests.request("GET", url, headers=headers, data=payload)
+    search_results = response.json()
+    results = search_results['results']
+    result = results[0]
+    geometry = result['geometry']
+    point_location = geometry['location']
+    lat = point_location['lat']
+    lng = point_location['lng']
+    print(lat)
+    print(lng)
     
     """If a User does not enter in a Location."""
     if location == "":
@@ -145,12 +160,13 @@ def travelcategories():
         'restaurant': "Restaurants",
         'zoo': "Zoo",
         'shopping_mall': "Shopping",
+        'aquarium': "Aquariums",
         }
 
 
     """Category 1."""
 
-    url = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=48.856614%2C2.3522219&radius=20000&keyword=things%20to%20do%20in%20{location}&type={category1}&rankby=prominence&key={API_KEY}"
+    url = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={lat}%2C{lng}&radius=20000&keyword=things%20to%20do%20in%20{location}&type={category1}&rankby=prominence&key={API_KEY}"
     
     payload = {}
     headers = {}
