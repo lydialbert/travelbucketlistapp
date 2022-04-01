@@ -3,6 +3,18 @@
 
 {% block head %}
 <link rel="stylesheet" type="text/css" href="/static/style.css"/>
+<script>
+    let autocomplete;
+    function initAutocomplete() {
+        autocomplete = new google.maps.places.Autocomplete(
+            document.getElementById('autocomplete'), 
+            {
+                types: ['establishment'],
+                fields: ['place_id', 'geomtry', 'name']
+            })};
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVSRqldNk1Cg3JJqg3YWhGRQ4SbjWFbRo&libraries=places&callback=initAutocomplete" async defer>
+</script>
 <style>
     body {
       background-image: url('https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/beautiful-oia-royalty-free-image-1570210636.jpg');
@@ -26,8 +38,7 @@
 
 <div class="nav">
     <ul>
-        <li><a href="/home">Home</a></li>
-        <li><a href="/about">About</a></li>
+        <li><a href="/profile">My Profile</a></li>
         <li><a href="/mybucketlists">My Bucketlists</a></li>
         <li><a href="/createbucketlist">Create a New Bucketlist!</a></li>
     </ul>
@@ -39,50 +50,56 @@
         <p>
             Enter Location: <input type="text" name="location" />
         </p>
+        <p>
+            <input id="autocomplete" placecholder="Enter a City." type="text" />
+        </p>
     <h2>Second, Choose Your Categories:</h2>
         <div>
         <select name="category1">
-            <option value="" disabled selected hidden>Choice #1</option>
-            <option value="Restaurants">Food and Drinks</option> 
-            <option value="Park">Nature and Parks</option> 
-            <option value="Nightlife">Nightlife</option>
-            <option value="Museums">Museums and Art</option>
-            <option value="History">Historical Sites</option>
-            <option value="Shopping">Shopping</option>
-            <option value="Landmark">Sights and Landmarks</option>
-            <option value="Stadium">Concerts and Shows</option>
+            <option value="N/A" disabled selected hidden>Choice #1</option>
+            <option value="park">Nature and Parks</option>
+            <option value="art_gallery">Art Galleries</option>
+            <option value="museum">Museums</option>
+            <option value="amusement_park">Amusement Parks</option>
             <option value="tourist_attraction">Tourist Attractions</option>
-            <option value="natural_feature">Day Trip Activities</option>
+            <option value="point_of_interest">Most Popular</option>
+            <option value="night_club">Night Life</option>
+            <option value="cafe">Cafes</option>
+            <option value="restaurant">Restaurants</option>
+            <option value="zoo">Zoos</option>
+            <option value="shopping_mall">Shopping</option>
         </select>
         </div>
         <div>
         <select name="category2">
-            <option value="" disabled selected hidden>Choice #2</option>
-            <option value="Restaurants">Food and Drinks</option> 
-            <option value="Park">Nature and Parks</option> 
-            <option value="Nightlife">Nightlife</option>
-            <option value="Museums">Museums and Art</option>
-            <option value="History">Historical Sites</option>
-            <option value="Shopping">Shopping</option>
-            <option value="Landmark">Sights and Landmarks</option>
-            <option value="Stadium">Concerts and Shows</option>
+            <option value="N/A" disabled selected hidden>Choice #1</option>
+            <option value="park">Nature and Parks</option>
+            <option value="art_gallery">Art Galleries</option>
+            <option value="museum">Museums</option>
+            <option value="amusement_park">Amusement Parks</option>
             <option value="tourist_attraction">Tourist Attractions</option>
-            <option value="natural_feature">Day Trip Activities</option>
+            <option value="point_of_interest">Most Popular</option>
+            <option value="night_club">Night Life</option>
+            <option value="cafe">Cafes</option>
+            <option value="restaurant">Restaurants</option>
+            <option value="zoo">Zoos</option>
+            <option value="shopping_mall">Shopping</option>
         </select>
         </div>
         <div>
         <select name="category3">
-            <option value="" disabled selected hidden>Choice #3</option>
-            <option value="Restaurants">Food and Drinks</option> 
-            <option value="Park">Nature and Parks</option> 
-            <option value="Nightlife">Nightlife</option>
-            <option value="Museums">Museums and Art</option>
-            <option value="History">Historical Sites</option>
-            <option value="Shopping">Shopping</option>
-            <option value="Landmark">Sights and Landmarks</option>
-            <option value="Stadium">Concerts and Shows</option>
+            <option value="N/A" disabled selected hidden>Choice #1</option>
+            <option value="park">Nature and Parks</option>
+            <option value="art_gallery">Art Galleries</option>
+            <option value="museum">Museums</option>
+            <option value="amusement_park">Amusement Parks</option>
             <option value="tourist_attraction">Tourist Attractions</option>
-            <option value="natural_feature">Day Trip Activities</option>
+            <option value="point_of_interest">Most Popular</option>
+            <option value="night_club">Night Life</option>
+            <option value="cafe">Cafes</option>
+            <option value="restaurant">Restaurants</option>
+            <option value="zoo">Zoos</option>
+            <option value="shopping_mall">Shopping</option>
         </select>
         </div>
         <p>
@@ -90,4 +107,5 @@
         </p>
     </form>
 </div>
+<script src="/static/autocomplete.js"></script>
 {% endblock %}

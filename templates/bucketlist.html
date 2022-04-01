@@ -22,8 +22,7 @@
 
   <div class="nav">
     <ul>
-        <li><a href="/home">Home</a></li>
-        <li><a href="/about">About</a></li>
+        <li><a href="/profile">My Profile</a></li>
         <li><a href="/mybucketlists">My Bucketlists</a></li>
         <li><a href="/createbucketlist">Create a New Bucketlist!</a></li>
     </ul>
@@ -32,40 +31,49 @@
   {% if category1_items == [] %}
     <div></div>
   {% else %}
-  <h3>{{ category1 }}</h3>
-  <div>
-  {% for item in category1_items %}
-    <p>
-      {{ item }}
-    </p>
-  {% endfor %}
-  </div>
+    <h3>{{ category1 }}</h3>
+    <div>
+    {% for item in category1_items %}
+      <p>
+        <label class="changelater">
+          <input type="checkbox" id="checkbox"><span class="checkmark"></span>
+        </label>
+        {{ item }}
+      </p>
+    {% endfor %}
+    </div>
   {% endif %}
 
   {% if category2_items == [] %}
     <div></div>
   {% else %}
-  <h3>{{ category2 }}</h3>
-  <div>
-    {% for item in category2_items %}
-      <p>
-        {{ item }}
-      </p>
-    {% endfor %}
-  </div>
+    <h3>{{ category2 }}</h3>
+    <div>
+      {% for item in category2_items %}
+        <p>
+          <label class="changelater">
+            <input type="checkbox" id="checkbox"><span class="checkmark"></span>
+          </label>
+          {{ item }}
+        </p>
+      {% endfor %}
+    </div>
   {% endif %}
 
   {% if category3_items == [] %}
     <div></div>
   {% else %}
-  <h3>{{ category3 }}</h3>
-  <div>
-    {% for item in category3_items %}
-      <p>
-        {{ item }}
-      </p>
-    {% endfor %}
-  </div>
+    <h3>{{ category3 }}</h3>
+    <div>
+      {% for item in category3_items %}
+        <p>
+          <label class="changelater">
+            <input type="checkbox" id="checkbox"><span class="checkmark"></span>
+          </label>
+          {{ item }}
+        </p>
+      {% endfor %}
+    </div>
   {% endif %}
 
   <div id="map"></div>

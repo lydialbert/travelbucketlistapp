@@ -7,8 +7,6 @@
 const createAccountButton = document.querySelector('#create_account_button');
 
 createAccountButton.addEventListener('click', (evt) => {
-    evt.preventDefault();
-
     alert('Success! Go ahead and login in.')
 });
 

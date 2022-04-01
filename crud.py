@@ -72,10 +72,15 @@ def create_bucketlist_item(user_id, bucketlist_id, category, title):
     return bucketlist_item
 
 
-def get_items_from_bucketlist_in_category(bucketlist_id, category):
-    """Return Items by Category."""
+def get_item_title(bucketlist_id, category):
+    """Return an Item's Title by its Category."""
 
-    return Item.query.filter(Item.bucketlist_id == bucketlist_id, Item.item_category == category).all()
+    list_of_tuples = db.session.query(Item.item_title).filter(Item.bucketlist_id == bucketlist_id, Item.item_category == category).all()
+
+    list_of_titles = []
+    for t in list_of_tuples:
+        list_of_titles.append(t[0])
+    return list_of_titles
 
 
 def delete_entire_bucketlist(bucketlist_id):

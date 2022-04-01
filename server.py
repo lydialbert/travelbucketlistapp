@@ -15,18 +15,24 @@ app.jinja_env.undefined = StrictUndefined
 API_KEY = os.environ['GOOGLE_PLACES_KEY']
 
 
+travel_categories = {
+    'park': "Nature and Parks", 
+    'art_gallery': "Art Galleries", 
+    'museum': "Museums",
+    'amusement_park': "Amusement Parks",
+    'tourist_attraction': "Tourist Attractions",
+    'point_of_interest': "Most Popular",
+    'night_club': "Night Life",
+    'cafe': "Cafes",
+    'restaurant': "Restaurants",
+    }
+
 @app.route('/')
 def loginpage():
     """View the Welcome page."""
 
     return render_template('welcome.html')
 
-
-@app.route('/about')
-def about_page():
-    """View the About Page."""
-
-    return render_template('about.html')
 
 @app.route('/create_account', methods=["POST"])
 def register_user():
@@ -59,6 +65,14 @@ def process_login():
         session["user_id"] = user.user_id
         return render_template('profile.html', user=user.fname)
 
+
+@app.route("/forgotpassword", methods=['POST'])
+def reset_password():
+    """Send email to reset a password."""
+
+    flash("Check your email for resetting password instructions.")
+    return redirect("/")
+
 @app.route('/profile')
 def profile_page():
     """View a User's Profile Page."""
@@ -68,11 +82,6 @@ def profile_page():
 
     return render_template('profile.html', user=user.fname)
 
-@app.route('/home')
-def homepage():
-    """View the User's Profile."""
-
-    return render_template('home.html')
 
 @app.route('/createbucketlist')
 def bucketlist_form():
@@ -88,26 +97,29 @@ def travelcategories():
     category1 = request.form.get("category1")
     category2 = request.form.get("category2")
     category3 = request.form.get("category3")
-
-    if category1 == 'Other':
-        category1 = request.form.get("users_choice")
-        print(category1)
-    elif category2 == 'Other':
-        category2 = request.form.get("users_choice")
-        print(category2)
-    elif category3 == 'Other':
-        category3 = request.form.get("users_choice")
-        print(category3)
-    else:
-        location = request.form.get("location")
-        category1 = request.form.get("category1")
-        category2 = request.form.get("category2")
-        category3 = request.form.get("category3")
     
     session['location'] = location
     session['category1'] = category1
     session['category2'] = category2
     session['category3'] = category3
+
+    
+    """If a User does not enter in a Location."""
+    if location == "":
+        flash("Make sure to enter a correct City.")
+        return redirect('/createbucketlist')
+
+
+    """If a User does not select a Category."""
+    categories = [session['category1'], session['category2'], session['category3']]
+
+    for category in categories:
+        if category == None:
+            flash("Must enter in a category.")
+            return redirect('/createbucketlist')
+
+
+    """Creating a Bucketlist for the User."""
 
     user_id = session['user_id']
     user = crud.get_user_by_id(user_id)
@@ -115,13 +127,30 @@ def travelcategories():
     bucketlist = crud.create_bucketlist(user, location, category1, category2, category3)
     db.session.add(bucketlist)
     db.session.commit()
+    
     session["bucketlist_id"] = bucketlist.bucketlist_id
+    
 
+    """Google Places API Requests."""
+    
+    travel_categories = {
+        'park': "Nature and Parks", 
+        'art_gallery': "Art Galleries", 
+        'museum': "Museums",
+        'amusement_park': "Amusement Parks",
+        'tourist_attraction': "Tourist Attractions",
+        'point_of_interest': "Most Popular",
+        'night_club': "Night Life",
+        'cafe': "Cafes",
+        'restaurant': "Restaurants",
+        'zoo': "Zoo",
+        'shopping_mall': "Shopping",
+        }
 
 
     """Category 1."""
 
-    url = f"https://maps.googleapis.com/maps/api/place/textsearch/json?query={category1}%20in%20{location}&key={API_KEY}"
+    url = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=48.856614%2C2.3522219&radius=20000&keyword=things%20to%20do%20in%20{location}&type={category1}&rankby=prominence&key={API_KEY}"
     
     payload = {}
     headers = {}
@@ -131,22 +160,30 @@ def travelcategories():
     results = search_results['results']
     category1_list = []
     category1_photos = []
+    category1_ratings = []
     for result in results:
         item = result['name']
-        photos = result['photos']
-        photo_ref = photos[0]['photo_reference']
-        photo_url = f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference={photo_ref}&key={API_KEY}"
-        category1_photos.append(photo_url)
+        rating = result['rating']
+        if "photos" in result:
+            photos = result['photos']
+            photo_ref = photos[0]['photo_reference']
+            photo_url = f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference={photo_ref}&key={API_KEY}"
+            category1_photos.append(photo_url)
+        else:
+            category1_photos.append("")
         category1_list.append(item)
+        category1_ratings.append(rating)
     category1_items = category1_list[:5]
     category1_photos = category1_photos[:5]
-    category1_test = list(zip(category1_list, category1_photos))
+    category1_ratings = category1_ratings[:5]
+    zipped_category1 = zip(category1_list, category1_photos, category1_ratings)
+    category1_test = list(zipped_category1)
 
 
 
     """Category 2."""
 
-    url = f"https://maps.googleapis.com/maps/api/place/textsearch/json?query={category2}%20in%20{location}&key={API_KEY}"
+    url = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=48.856614%2C2.3522219&radius=20000&keyword=things%20to%20do%20in%20{location}&type={category2}&rankby=prominence&key={API_KEY}"
     
     payload = {}
     headers = {}
@@ -158,10 +195,13 @@ def travelcategories():
     category2_photos = []
     for result in results:
         item = result['name']
-        photos = result['photos']
-        photo_ref = photos[0]['photo_reference']
-        photo_url = f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference={photo_ref}&key={API_KEY}"
-        category2_photos.append(photo_url)
+        if "photos" in result:
+            photos = result['photos']
+            photo_ref = photos[0]['photo_reference']
+            photo_url = f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference={photo_ref}&key={API_KEY}"
+            category2_photos.append(photo_url)
+        else:
+            category2_photos.append("")
         category2_list.append(item)
     category2_items = category2_list[:5]
     category2_photos = category2_photos[:5]
@@ -171,7 +211,7 @@ def travelcategories():
 
     """Category 3."""
 
-    url = f"https://maps.googleapis.com/maps/api/place/textsearch/json?query={category3}%20in%20{location}&key={API_KEY}"
+    url = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=48.856614%2C2.3522219&radius=20000&keyword=things%20to%20do%20in%20{location}&type={category3}&rankby=prominence&key={API_KEY}"
     
     payload = {}
     headers = {}
@@ -183,21 +223,23 @@ def travelcategories():
     category3_photos = []
     for result in results:
         item = result['name']
-        photos = result['photos']
-        photo_ref = photos[0]['photo_reference']
-        photo_url = f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference={photo_ref}&key={API_KEY}"
-        category3_photos.append(photo_url)
+        if "photos" in result:
+            photos = result['photos']
+            photo_ref = photos[0]['photo_reference']
+            photo_url = f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference={photo_ref}&key={API_KEY}"
+            category3_photos.append(photo_url)
+        else:
+            category3_photos.append("")
         category3_list.append(item)
     category3_items = category3_list[:5]
     category3_photos = category3_photos[:5]
     category3_test = list(zip(category3_list, category3_photos))
 
-
     return render_template('travelpicks.html', 
     location=location, 
-    category1=category1, 
-    category2=category2, 
-    category3=category3,
+    category1=travel_categories[session['category1']],
+    category2=travel_categories[session['category2']], 
+    category3=travel_categories[session['category3']],
     category1_items=category1_items, 
     category2_items=category2_items, 
     category3_items=category3_items,
@@ -240,9 +282,9 @@ def bucketlist():
 
     return render_template('bucketlist.html', 
     location=location, 
-    category1=category1, 
-    category2=category2, 
-    category3=category3,
+    category1=travel_categories[session['category1']], 
+    category2=travel_categories[session['category2']], 
+    category3=travel_categories[session['category3']],
     category1_items=category1_items, 
     category2_items=category2_items, 
     category3_items=category3_items
@@ -263,10 +305,9 @@ def show_individual_bucketlist(bucketlist_id):
     """Show one Bucketlist."""
 
     bucketlist = crud.get_a_bucketlist_by_bucketlist_id(bucketlist_id)
-
-    category1_items = crud.get_items_from_bucketlist_in_category(bucketlist_id, bucketlist.category1)
-    category2_items = crud.get_items_from_bucketlist_in_category(bucketlist_id, bucketlist.category2)
-    category3_items = crud.get_items_from_bucketlist_in_category(bucketlist_id, bucketlist.category3)
+    category1_items = crud.get_item_title(bucketlist_id, bucketlist.category1)
+    category2_items = crud.get_item_title(bucketlist_id, bucketlist.category2)
+    category3_items = crud.get_item_title(bucketlist_id, bucketlist.category3)
 
     return render_template("bucketlist.html",
     location=bucketlist.location,
@@ -278,7 +319,7 @@ def show_individual_bucketlist(bucketlist_id):
     category3_items=category3_items
     )
 
-@app.route('/delete_bucketlist', methods=["POST"])
+@app.route("/delete_bucketlist", methods=["POST"])
 def delete_bucketlist():
     """Delete a Bucketlist."""
 
@@ -289,7 +330,7 @@ def delete_bucketlist():
     return "Success"
 
 
-@app.route('/logout', methods=["POST"])
+@app.route("/logout", methods=["POST"])
 def user_logout():
     """Log a User out."""
 

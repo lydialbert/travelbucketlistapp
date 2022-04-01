@@ -84,3 +84,9 @@ body {
   position: fixed;
   background-color: white;
 }
+
+
+/* Star Ratings */
+.checked {
+  color: yellow;
+}
