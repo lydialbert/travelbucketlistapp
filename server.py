@@ -7,6 +7,7 @@ from jinja2 import StrictUndefined
 import os
 import requests
 import crud
+import googleapi
 
 app = Flask(__name__)
 app.secret_key = "SECRET"
@@ -103,22 +104,6 @@ def travelcategories():
     session['category2'] = category2
     session['category3'] = category3
 
-
-    """Get the lat/lng of the Location."""
-    url = f"https://maps.googleapis.com/maps/api/geocode/json?address={location}&key={API_KEY}"
-    payload = {}
-    headers = {}
-    response = requests.request("GET", url, headers=headers, data=payload)
-    search_results = response.json()
-    results = search_results['results']
-    result = results[0]
-    geometry = result['geometry']
-    point_location = geometry['location']
-    lat = point_location['lat']
-    lng = point_location['lng']
-    print(lat)
-    print(lng)
-    
     """If a User does not enter in a Location."""
     if location == "":
         flash("Make sure to enter a correct City.")
@@ -126,16 +111,15 @@ def travelcategories():
 
 
     """If a User does not select a Category."""
-    categories = [session['category1'], session['category2'], session['category3']]
+    category_keys = [session['category1'], session['category2'], session['category3']]
 
-    for category in categories:
+    for category in category_keys:
         if category == None:
             flash("Must enter in a category.")
             return redirect('/createbucketlist')
 
 
     """Creating a Bucketlist for the User."""
-
     user_id = session['user_id']
     user = crud.get_user_by_id(user_id)
 
@@ -144,9 +128,6 @@ def travelcategories():
     db.session.commit()
     
     session["bucketlist_id"] = bucketlist.bucketlist_id
-    
-
-    """Google Places API Requests."""
     
     travel_categories = {
         'park': "Nature and Parks", 
@@ -163,105 +144,34 @@ def travelcategories():
         'aquarium': "Aquariums",
         }
 
+    categories = []
+    categories.append(travel_categories[category1])
+    categories.append(travel_categories[category2])
+    categories.append(travel_categories[category3])
 
-    """Category 1."""
+    item_lists = []
+    test_lists = []
 
-    url = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={lat}%2C{lng}&radius=20000&keyword=things%20to%20do%20in%20{location}&type={category1}&rankby=prominence&key={API_KEY}"
-    
-    payload = {}
-    headers = {}
+    """Get the lat/lng of the Location."""
+    location_dict = googleapi.get_point_location(location)
 
-    response = requests.request("GET", url, headers=headers, data=payload)
-    search_results = response.json()
-    results = search_results['results']
-    category1_list = []
-    category1_photos = []
-    category1_ratings = []
-    for result in results:
-        item = result['name']
-        rating = result['rating']
-        if "photos" in result:
-            photos = result['photos']
-            photo_ref = photos[0]['photo_reference']
-            photo_url = f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference={photo_ref}&key={API_KEY}"
-            category1_photos.append(photo_url)
-        else:
-            category1_photos.append("")
-        category1_list.append(item)
-        category1_ratings.append(rating)
-    category1_items = category1_list[:5]
-    category1_photos = category1_photos[:5]
-    category1_ratings = category1_ratings[:5]
-    zipped_category1 = zip(category1_list, category1_photos, category1_ratings)
-    category1_test = list(zipped_category1)
+    """Get each Categories Items"""
+    category1_items, category1_test = googleapi.travel_data(location_dict, location, category1)
+    item_lists.append(category1_items)
+    test_lists.append(category1_test)
+    category2_items, category2_test = googleapi.travel_data(location_dict, location, category2)
+    item_lists.append(category2_items)
+    test_lists.append(category2_test)
+    category3_items, category3_test = googleapi.travel_data(location_dict, location, category3)
+    item_lists.append(category3_items)
+    test_lists.append(category3_test)
 
-
-
-    """Category 2."""
-
-    url = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=48.856614%2C2.3522219&radius=20000&keyword=things%20to%20do%20in%20{location}&type={category2}&rankby=prominence&key={API_KEY}"
-    
-    payload = {}
-    headers = {}
-
-    response = requests.request("GET", url, headers=headers, data=payload)
-    search_results = response.json()
-    results = search_results['results']
-    category2_list = []
-    category2_photos = []
-    for result in results:
-        item = result['name']
-        if "photos" in result:
-            photos = result['photos']
-            photo_ref = photos[0]['photo_reference']
-            photo_url = f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference={photo_ref}&key={API_KEY}"
-            category2_photos.append(photo_url)
-        else:
-            category2_photos.append("")
-        category2_list.append(item)
-    category2_items = category2_list[:5]
-    category2_photos = category2_photos[:5]
-    category2_test = list(zip(category2_list, category2_photos))
-
-
-
-    """Category 3."""
-
-    url = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=48.856614%2C2.3522219&radius=20000&keyword=things%20to%20do%20in%20{location}&type={category3}&rankby=prominence&key={API_KEY}"
-    
-    payload = {}
-    headers = {}
-
-    response = requests.request("GET", url, headers=headers, data=payload)
-    search_results = response.json()
-    results = search_results['results']
-    category3_list = []
-    category3_photos = []
-    for result in results:
-        item = result['name']
-        if "photos" in result:
-            photos = result['photos']
-            photo_ref = photos[0]['photo_reference']
-            photo_url = f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference={photo_ref}&key={API_KEY}"
-            category3_photos.append(photo_url)
-        else:
-            category3_photos.append("")
-        category3_list.append(item)
-    category3_items = category3_list[:5]
-    category3_photos = category3_photos[:5]
-    category3_test = list(zip(category3_list, category3_photos))
 
     return render_template('travelpicks.html', 
-    location=location, 
-    category1=travel_categories[session['category1']],
-    category2=travel_categories[session['category2']], 
-    category3=travel_categories[session['category3']],
-    category1_items=category1_items, 
-    category2_items=category2_items, 
-    category3_items=category3_items,
-    category1_test=category1_test,
-    category2_test=category2_test,
-    category3_test=category3_test
+    location=location,
+    categories=categories,
+    item_lists=item_lists,
+    test_lists=test_lists
     )
 
 
