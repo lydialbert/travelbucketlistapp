@@ -51,11 +51,11 @@
             Enter Location: <input type="text" name="location" />
         </p>
         <p>
-            Enter Location: <input id="autocomplete" placecholder="Enter a City" type="text"/>
+            Enter Location: <input id="autocomplete" placecholder="City, Country" type="text" />
         </p>
     <h2>Second, Choose Your Categories:</h2>
         <div>
-        <select name="category1">
+        <select name="category1" id="category1_select">
             <option value="N/A" disabled selected hidden>Choice #1</option>
             <option value="park">Nature and Parks</option>
             <option value="art_gallery">Art Galleries</option>
@@ -69,11 +69,12 @@
             <option value="zoo">Zoos</option>
             <option value="shopping_mall">Shopping</option>
             <option value="aquarium">Aquariums</option>
+            <option value="Other" id="category1_other">Other</option>
         </select>
         </div>
         <div>
-        <select name="category2">
-            <option value="N/A" disabled selected hidden>Choice #1</option>
+        <select name="category2" id="category2_select">
+            <option value="N/A" disabled selected hidden>Choice #2</option>
             <option value="park">Nature and Parks</option>
             <option value="art_gallery">Art Galleries</option>
             <option value="museum">Museums</option>
@@ -86,11 +87,12 @@
             <option value="zoo">Zoos</option>
             <option value="shopping_mall">Shopping</option>
             <option value="aquarium">Aquariums</option>
+            <option value="Other" id="category2_other">Other</option>
         </select>
         </div>
         <div>
-        <select name="category3">
-            <option value="N/A" disabled selected hidden>Choice #1</option>
+        <select name="category3" id="category3_select">
+            <option value="N/A" disabled selected hidden>Choice #3</option>
             <option value="park">Nature and Parks</option>
             <option value="art_gallery">Art Galleries</option>
             <option value="museum">Museums</option>
@@ -103,6 +105,7 @@
             <option value="zoo">Zoos</option>
             <option value="shopping_mall">Shopping</option>
             <option value="aquarium">Aquariums</option>
+            <option value="Other" id="category3_other">Other</option>
         </select>
         </div>
         <p>
@@ -110,4 +113,5 @@
         </p>
     </form>
 </div>
+<script src="/static/otherbutton.js"></script>
 {% endblock %}

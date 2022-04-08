@@ -98,7 +98,19 @@ def travelcategories():
     category1 = request.form.get("category1")
     category2 = request.form.get("category2")
     category3 = request.form.get("category3")
+
+    """'Other' Feature."""
+    if category1 == 'Other':
+        category1 = request.form.get("category1_choice")
+        print(category1)
+    if category2 == 'Other':
+        category2 = request.form.get("category2_choice")
+        print(category2)
+    if category3 == 'Other':
+        category3 = request.form.get("category3_choice")
+        print(category3)
     
+    """Store categories in Session for later use."""
     session['location'] = location
     session['category1'] = category1
     session['category2'] = category2
@@ -145,9 +157,9 @@ def travelcategories():
         }
 
     categories = []
-    categories.append(travel_categories[category1])
-    categories.append(travel_categories[category2])
-    categories.append(travel_categories[category3])
+    categories.append(travel_categories.get(category1, ""))
+    categories.append(travel_categories.get(category2, ""))
+    categories.append(travel_categories.get(category3, ""))
 
     item_lists = []
     test_lists = []

@@ -28,6 +28,8 @@
       {% set category_test = test_lists[i] %}
       {% if category_items == [] %} 
         <h2>Sorry, there are no suggestions for {{ category }}.</h2>
+      {% elif category == "" %}
+        <h2>Sorry, there are no suggestions for that category.</h2>
       {% else %} 
         <h2>Pick Your {{ category }} Options:</h2>
         <input type="hidden" name="category{{ i +1 }}name" value="{{ category }}">
