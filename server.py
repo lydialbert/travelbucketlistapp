@@ -141,6 +141,7 @@ def travelcategories():
     
     session["bucketlist_id"] = bucketlist.bucketlist_id
     
+    """Get an Appropriate name for each Category."""
     travel_categories = {
         'park': "Nature and Parks", 
         'art_gallery': "Art Galleries", 
@@ -157,6 +158,7 @@ def travelcategories():
         }
 
     categories = []
+
     categories.append(travel_categories.get(category1, ""))
     categories.append(travel_categories.get(category2, ""))
     categories.append(travel_categories.get(category3, ""))
@@ -179,12 +181,7 @@ def travelcategories():
     test_lists.append(category3_test)
 
 
-    return render_template('travelpicks.html', 
-    location=location,
-    categories=categories,
-    item_lists=item_lists,
-    test_lists=test_lists
-    )
+    return render_template('travelpicks.html', location=location, categories=categories, item_lists=item_lists, test_lists=test_lists)
 
 
 @app.route('/bucketlist', methods=['POST'])
@@ -217,15 +214,15 @@ def bucketlist():
         bucketlist_item = crud.create_bucketlist_item(user_id, bucketlist_id, category3, item)
         db.session.add(bucketlist_item)
         db.session.commit()
+    
+    category_names = [travel_categories[session['category1']], travel_categories[session['category2']], travel_categories[session['category3']]]
+    
+    category_items = [category1_items, category2_items, category3_items]
 
     return render_template('bucketlist.html', 
-    location=location, 
-    category1=travel_categories[session['category1']], 
-    category2=travel_categories[session['category2']], 
-    category3=travel_categories[session['category3']],
-    category1_items=category1_items, 
-    category2_items=category2_items, 
-    category3_items=category3_items
+    location=location,
+    category_names=category_names,
+    category_items=category_items
     )
 
 @app.route("/mybucketlists")
@@ -256,6 +253,16 @@ def show_individual_bucketlist(bucketlist_id):
     category2_items=category2_items,
     category3_items=category3_items
     )
+
+@app.route("/status")
+def get_lat_and_lng():
+    """Get the lat/lng for the Map Marker."""
+    
+    location = session.get('location')
+    location_points = googleapi.get_point_location(location)
+    lat = location_points['lat']
+    lng = location_points['lng']
+
 
 @app.route("/delete_bucketlist", methods=["POST"])
 def delete_bucketlist():

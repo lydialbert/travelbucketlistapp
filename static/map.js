@@ -7,7 +7,7 @@
 let map;
 
 function initMap() {
-    const myLatLng = { lat: -25.363, lng: 131.044 };
+    const myLatLng = { lat: -25.363, lng: 131.044 }; // how to get the lat/lng in server.py
     const map = new google.maps.Map(document.getElementById("map"), {
       zoom: 4,
       center: myLatLng,
@@ -23,6 +23,8 @@ const svgMarker = {
     anchor: new google.maps.Point(15, 30),
     };
 
+
+// for loop to go through all of the category items lists in server.py
 new google.maps.Marker({
     position: myLatLng,
     icon: svgMarker,
@@ -30,10 +32,17 @@ new google.maps.Marker({
   });
 }
 
-for (let step = 0; step < 5; step++) {
-    new google.maps.Marker({
-        position: new google.maps.LatLng(17.088291, 78.442383),
-        icon: svgMarker,
-        map: map,
+
+const button = document.querySelector('#update-status');
+
+button.addEventListener('click', () => {
+  const queryString = new URLSearchParams({order: 123}).toString();
+  // you could also hard code url to '/status?order=123'
+  const url = `/status?${queryS}`;
+
+  fetch(url)
+    .then(response => response.text())
+    .then(status => {
+      document.querySelector('#order-status').innerHTML = status;
     });
-}
+});
