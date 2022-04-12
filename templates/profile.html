@@ -16,27 +16,26 @@
           <li><a href="/createbucketlist">CREATE BUCKETLIST</a></li>
         </ul>
       </nav>
-      <img src="/static/images/menu.png" class="menu-icon">
+      <div class="dropdown">
+        <button class="dropbtn"> <img src="/static/images/menu.png" class="menu-icon">
+        </button>
+        <div class="dropdown-content">
+          <a href="/profile">HOME</a>
+          <a href="/mybucketlists">BUCKETLISTS</a>
+          <a href="/createbucketlist">CREATE BUCKETLIST</a>
+          <a href="/">LOG OUT</a>
+        </div>
+      </div>
     </div>
 
     <div class="row">
       <div class="col">
-        <h1>Welcome {{ user }}</h1>
-        <p>Are you ready to Travel?</p>
-        <button>Explore</button>
+        <h1>Welcome, {{ user }}!</h1>
+        <p>Here you will be able to search any major city you wish to travel to and select a few specific categories of what you wish
+          to do once you arrive. As you search through your options, you will be able to add an specific place to your official bucketlist - have fun!
+        </p>
+        <button type="button" class="explorebtn">Explore</button>
       </div>
     </div>
-
-
   </div>
-
-
-
-
-  <!--
-  <form action="/logout" method="POST">
-    <p> 
-      <button id="logout_button">Log Out</button>
-    </p>
-  </form> -->
 {% endblock %}

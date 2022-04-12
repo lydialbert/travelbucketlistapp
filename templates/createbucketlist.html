@@ -1,117 +1,117 @@
 {% extends 'base.html' %}
-{% block title %}Travel Bucketlist App{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" type="text/css" href="/static/style.css"/>
-<script>
-    let autocomplete;
-    function initAutocomplete() {
-        autocomplete = new google.maps.places.Autocomplete(
-            document.getElementById('autocomplete'), 
-            {
-                types: ['establishment'],
-                fields: ['place_id', 'geomtry', 'name']
-            })};
-</script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVSRqldNk1Cg3JJqg3YWhGRQ4SbjWFbRo&libraries=places&callback=initAutocomplete" async defer>
-</script>
-<style>
-    body {
-      background-image: url('https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/beautiful-oia-royalty-free-image-1570210636.jpg');
-      background-position: center;
-      background-repeat: no-repeat;
-    }
-    h1 {
-    text-align: center;
-    }
-    h3 {
-    text-align: center;
-    }
-    li a {
-      text-align: center;
-    }
-  </style>
+    <link rel="stylesheet" href="/static/createbl.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+        let autocomplete;
+        function initAutocomplete() {
+            autocomplete = new google.maps.places.Autocomplete(
+                document.getElementById('autocomplete'), 
+                {
+                    types: ['establishment'],
+                    fields: ['place_id', 'geomtry', 'name']
+                })};
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVSRqldNk1Cg3JJqg3YWhGRQ4SbjWFbRo&libraries=places&callback=initAutocomplete" async defer>
+    </script>
 {% endblock %}
 
 {% block body %}
-<h1>~ Hey! Are you ready to Travel? ~</h1>
+    <div class="container">
+            <div class="navbar">
+              <img src="/static/images/logo.png" class="logo">
+              <nav>
+                <ul>
+                  <li><a href="/profile">HOME</a></li>
+                  <li><a href="/mybucketlists">BUCKETLISTS</a></li>
+                  <li><a href="/createbucketlist">CREATE BUCKETLIST</a></li>
+                </ul>
+              </nav>
+              <a href="">
+                <img src="/static/images/menu.png" class="menu-icon">
+              </a>
+        
+              <div class="dropdown">
+                <button class="dropbtn"> <!--- <img src="/static/images/menu.png"> -->
+                </button>
+                <div class="dropdown-content">
+                  <a href="/profile">HOME</a>
+                  <a href="/mybucketlists">BUCKETLISTS</a>
+                  <a href="/createbucketlist">CREATE BUCKETLIST</a>
+                </div>
+              </div>
+            </div>
 
-<div class="nav">
-    <ul>
-        <li><a href="/profile">My Profile</a></li>
-        <li><a href="/mybucketlists">My Bucketlists</a></li>
-        <li><a href="/createbucketlist">Create a New Bucketlist!</a></li>
-    </ul>
-  </div>
-
-<div class="travelparent">
-    <h2>First, Pick Your Destination.</h2>
-    <form action="/travelform" method="POST">
-        <p>
-            Enter Location: <input type="text" name="location" />
-        </p>
-        <p>
-            Enter Location: <input id="autocomplete" placecholder="City, Country" type="text" />
-        </p>
-    <h2>Second, Choose Your Categories:</h2>
-        <div>
-        <select name="category1" id="category1_select">
-            <option value="N/A" disabled selected hidden>Choice #1</option>
-            <option value="park">Nature and Parks</option>
-            <option value="art_gallery">Art Galleries</option>
-            <option value="museum">Museums</option>
-            <option value="amusement_park">Amusement Parks</option>
-            <option value="tourist_attraction">Tourist Attractions</option>
-            <option value="point_of_interest">Most Popular</option>
-            <option value="night_club">Night Life</option>
-            <option value="cafe">Cafes</option>
-            <option value="restaurant">Restaurants</option>
-            <option value="zoo">Zoos</option>
-            <option value="shopping_mall">Shopping</option>
-            <option value="aquarium">Aquariums</option>
-            <option value="Other" id="category1_other">Other</option>
-        </select>
+        <div class="form"> <h2>First, Pick Your Destination.</h2> </div>
+        <div class="main">
+            <form action="/travelform" method="POST">
+                <p>
+                    Enter Location: <input type="text" name="location" />
+                </p>
+                <p>
+                    Enter Location: <input id="autocomplete" placecholder="City, Country" type="text" />
+                </p>
+            <h2>Second, Choose Your Categories:</h2>
+                <div>
+                <select name="category1" id="category1_select">
+                    <option value="N/A" disabled selected hidden>Choice #1</option>
+                    <option value="park">Nature and Parks</option>
+                    <option value="art_gallery">Art Galleries</option>
+                    <option value="museum">Museums</option>
+                    <option value="amusement_park">Amusement Parks</option>
+                    <option value="tourist_attraction">Tourist Attractions</option>
+                    <option value="point_of_interest">Most Popular</option>
+                    <option value="night_club">Night Life</option>
+                    <option value="cafe">Cafes</option>
+                    <option value="restaurant">Restaurants</option>
+                    <option value="zoo">Zoos</option>
+                    <option value="shopping_mall">Shopping</option>
+                    <option value="aquarium">Aquariums</option>
+                    <option value="Other" id="category1_other">Other</option>
+                </select>
+                </div>
+                <div>
+                <select name="category2" id="category2_select">
+                    <option value="N/A" disabled selected hidden>Choice #2</option>
+                    <option value="park">Nature and Parks</option>
+                    <option value="art_gallery">Art Galleries</option>
+                    <option value="museum">Museums</option>
+                    <option value="amusement_park">Amusement Parks</option>
+                    <option value="tourist_attraction">Tourist Attractions</option>
+                    <option value="point_of_interest">Most Popular</option>
+                    <option value="night_club">Night Life</option>
+                    <option value="cafe">Cafes</option>
+                    <option value="restaurant">Restaurants</option>
+                    <option value="zoo">Zoos</option>
+                    <option value="shopping_mall">Shopping</option>
+                    <option value="aquarium">Aquariums</option>
+                    <option value="Other" id="category2_other">Other</option>
+                </select>
+                </div>
+                <div>
+                <select name="category3" id="category3_select">
+                    <option value="N/A" disabled selected hidden>Choice #3</option>
+                    <option value="park">Nature and Parks</option>
+                    <option value="art_gallery">Art Galleries</option>
+                    <option value="museum">Museums</option>
+                    <option value="amusement_park">Amusement Parks</option>
+                    <option value="tourist_attraction">Tourist Attractions</option>
+                    <option value="point_of_interest">Most Popular</option>
+                    <option value="night_club">Night Life</option>
+                    <option value="cafe">Cafes</option>
+                    <option value="restaurant">Restaurants</option>
+                    <option value="zoo">Zoos</option>
+                    <option value="shopping_mall">Shopping</option>
+                    <option value="aquarium">Aquariums</option>
+                    <option value="Other" id="category3_other">Other</option>
+                </select>
+                </div>
+                <p>
+                    <button id="categories_btn">Let's Go!</button>
+                </p>
+            </form>
         </div>
-        <div>
-        <select name="category2" id="category2_select">
-            <option value="N/A" disabled selected hidden>Choice #2</option>
-            <option value="park">Nature and Parks</option>
-            <option value="art_gallery">Art Galleries</option>
-            <option value="museum">Museums</option>
-            <option value="amusement_park">Amusement Parks</option>
-            <option value="tourist_attraction">Tourist Attractions</option>
-            <option value="point_of_interest">Most Popular</option>
-            <option value="night_club">Night Life</option>
-            <option value="cafe">Cafes</option>
-            <option value="restaurant">Restaurants</option>
-            <option value="zoo">Zoos</option>
-            <option value="shopping_mall">Shopping</option>
-            <option value="aquarium">Aquariums</option>
-            <option value="Other" id="category2_other">Other</option>
-        </select>
-        </div>
-        <div>
-        <select name="category3" id="category3_select">
-            <option value="N/A" disabled selected hidden>Choice #3</option>
-            <option value="park">Nature and Parks</option>
-            <option value="art_gallery">Art Galleries</option>
-            <option value="museum">Museums</option>
-            <option value="amusement_park">Amusement Parks</option>
-            <option value="tourist_attraction">Tourist Attractions</option>
-            <option value="point_of_interest">Most Popular</option>
-            <option value="night_club">Night Life</option>
-            <option value="cafe">Cafes</option>
-            <option value="restaurant">Restaurants</option>
-            <option value="zoo">Zoos</option>
-            <option value="shopping_mall">Shopping</option>
-            <option value="aquarium">Aquariums</option>
-            <option value="Other" id="category3_other">Other</option>
-        </select>
-        </div>
-        <p>
-            <button id="categories_btn">Let's Go!</button>
-        </p>
-    </form>
-</div>
-<script src="/static/otherbutton.js"></script>
+    </div>
+    <script src="/static/otherbutton.js"></script>
 {% endblock %}

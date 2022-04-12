@@ -5,26 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Travel Bucketlist App</title>
-    <link rel="stylesheet" href="/static/style.css"/>
-    <style>
-      body {
-        background-image: url('https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/our-beautiful-watercolor-world-map-irina-sztukowski.jpg');
-        background-position: center;
-        background-repeat: no-repeat;
-      }
-      h1 {
-      text-align: center;
-      }
-      h2 {
-      text-align: center;
-      }
-    </style>
+    <link rel="stylesheet" href="/static/welcomepage.css"/>
   </head>
 
   <body>
-    <h1>Welcome to the Travel Bucketlist App!</h1>
+    <h1>Welcome to the Travel Bucket List App!</h1>
     <div class="parent">
-      <div class="child">
+      <div class="child box">
         <h2>Create an Account</h2>
         <form action="/create_account" method="POST">
           <p>
@@ -44,9 +31,11 @@
         </form>
       </div>
 
-      <h2>OR</h2>
-
       <div class="child">
+        <h2>OR</h2>
+      </div>
+
+      <div class="child box">
         <h2>Log In</h2>
         <form action="/login" method="POST">
           <p>
@@ -65,7 +54,7 @@
           </p>
         </form>
       </div>
-    </div>
+    </div>  
     <script src="/static/welcomebuttons.js"></script>
   </body>
 </html>

@@ -8,6 +8,7 @@ API_KEY = os.environ['GOOGLE_PLACES_KEY']
 
 def get_point_location(location):
     """Gets the lat/lng of a Location."""
+    print(location)
     
     url = f"https://maps.googleapis.com/maps/api/geocode/json?address={location}&key={API_KEY}"
 
@@ -17,6 +18,7 @@ def get_point_location(location):
     response = requests.request("GET", url, headers=headers, data=payload)
     search_results = response.json()
     results = search_results['results']
+    print(results)
     result = results[0]
     geometry = result['geometry']
     point_location = geometry['location']
@@ -58,7 +60,7 @@ def travel_data(location_dict, location, category):
         if "photos" in result:
             photos = result['photos']
             photo_ref = photos[0]['photo_reference']
-            photo_url = f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference={photo_ref}&key={API_KEY}"
+            photo_url = f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=200&maxheight=200&photo_reference={photo_ref}&key={API_KEY}"
             category_photos.append(photo_url)
         else:
             category_photos.append("")
@@ -73,61 +75,3 @@ def travel_data(location_dict, location, category):
 
     return category_items, category_test
 
-
-
-
-
-
-    # """Category 2."""
-
-    # url = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=48.856614%2C2.3522219&radius=20000&keyword=things%20to%20do%20in%20{location}&type={category2}&rankby=prominence&key={API_KEY}"
-    
-    # payload = {}
-    # headers = {}
-
-    # response = requests.request("GET", url, headers=headers, data=payload)
-    # search_results = response.json()
-    # results = search_results['results']
-    # category2_list = []
-    # category2_photos = []
-    # for result in results:
-    #     item = result['name']
-    #     if "photos" in result:
-    #         photos = result['photos']
-    #         photo_ref = photos[0]['photo_reference']
-    #         photo_url = f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference={photo_ref}&key={API_KEY}"
-    #         category2_photos.append(photo_url)
-    #     else:
-    #         category2_photos.append("")
-    #     category2_list.append(item)
-    # category2_items = category2_list[:5]
-    # category2_photos = category2_photos[:5]
-    # category2_test = list(zip(category2_list, category2_photos))
-
-
-
-    # """Category 3."""
-
-    # url = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=48.856614%2C2.3522219&radius=20000&keyword=things%20to%20do%20in%20{location}&type={category3}&rankby=prominence&key={API_KEY}"
-    
-    # payload = {}
-    # headers = {}
-
-    # response = requests.request("GET", url, headers=headers, data=payload)
-    # search_results = response.json()
-    # results = search_results['results']
-    # category3_list = []
-    # category3_photos = []
-    # for result in results:
-    #     item = result['name']
-    #     if "photos" in result:
-    #         photos = result['photos']
-    #         photo_ref = photos[0]['photo_reference']
-    #         photo_url = f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference={photo_ref}&key={API_KEY}"
-    #         category3_photos.append(photo_url)
-    #     else:
-    #         category3_photos.append("")
-    #     category3_list.append(item)
-    # category3_items = category3_list[:5]
-    # category3_photos = category3_photos[:5]
-    # category3_test = list(zip(category3_list, category3_photos))

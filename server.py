@@ -152,8 +152,8 @@ def travelcategories():
         'night_club': "Night Life",
         'cafe': "Cafes",
         'restaurant': "Restaurants",
-        'zoo': "Zoo",
-        'shopping_mall': "Shopping",
+        'zoo': "Zoos",
+        'shopping_mall': "Shopping Malls",
         'aquarium': "Aquariums",
         }
 
@@ -244,14 +244,14 @@ def show_individual_bucketlist(bucketlist_id):
     category2_items = crud.get_item_title(bucketlist_id, bucketlist.category2)
     category3_items = crud.get_item_title(bucketlist_id, bucketlist.category3)
 
+    category_items = [category1_items, category2_items, category3_items]
+
     return render_template("bucketlist.html",
     location=bucketlist.location,
     category1=bucketlist.category1,
     category2=bucketlist.category2,
     category3=bucketlist.category3,
-    category1_items=category1_items,
-    category2_items=category2_items,
-    category3_items=category3_items
+    category_items=category_items
     )
 
 @app.route("/status")
