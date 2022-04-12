@@ -1,38 +1,42 @@
 {% extends 'base.html' %}
-{% block title %}Travel Bucketlist App{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="/static/style.css"/>
-<style>
-    body {
-      background-image: url('https://assets.traveltriangle.com/blog/wp-content/uploads/2016/07/limestone-rock-phang-nga-1-Beautiful-limestone-rock-in-the-ocean.jpg');
-      background-position: center;
-      background-repeat: no-repeat;
-    }
-    h1 {
-    text-align: center;
-    }
-    h3 {
-    text-align: center;
-    }
-    li a {
-      text-align: center;
-    }
-  </style>
+  <link rel="stylesheet" href="/static/profilepage.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
-<h1>~ Welcome {{ user }}! Are you ready to Travel? ~</h1>
-<div class="nav">
-  <ul>
-      <li><a href="/profile">My Profile</a></li>
-      <li><a href="/mybucketlists">My Bucketlists</a></li>
-      <li><a href="/createbucketlist">Create a New Bucketlist!</a></li>
-  </ul>
-</div>
-<form action="/logout" method="POST">
-  <p> 
-    <button id="logout_button">Log Out</button>
-  </p>
-</form>
+  <div class="container">
+    <div class="navbar">
+      <img src="/static/images/logo.png" class="logo">
+      <nav>
+        <ul>
+          <li><a href="/profile">HOME</a></li>
+          <li><a href="/mybucketlists">BUCKETLISTS</a></li>
+          <li><a href="/createbucketlist">CREATE BUCKETLIST</a></li>
+        </ul>
+      </nav>
+      <img src="/static/images/menu.png" class="menu-icon">
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <h1>Welcome {{ user }}</h1>
+        <p>Are you ready to Travel?</p>
+        <button>Explore</button>
+      </div>
+    </div>
+
+
+  </div>
+
+
+
+
+  <!--
+  <form action="/logout" method="POST">
+    <p> 
+      <button id="logout_button">Log Out</button>
+    </p>
+  </form> -->
 {% endblock %}
