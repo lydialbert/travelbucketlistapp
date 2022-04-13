@@ -8,7 +8,7 @@ const deleteButtons = document.querySelectorAll('.delete_button');
 
 for (const button of deleteButtons) {
     button.addEventListener('click', (evt) => { 
-        console.log("button clicked.")
+        alert("Bucket list has been deleted.")
 
         const formInputs = {
             bucketlist_id: button.id,

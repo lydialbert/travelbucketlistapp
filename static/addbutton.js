@@ -7,5 +7,5 @@
 const addButton = document.querySelector('#add-button');
 
 addButton.addEventListener('click', (evt) => {
-    alert('Added to Your Bucketlist!')
+    alert('Added to Your Bucket List!')
 });

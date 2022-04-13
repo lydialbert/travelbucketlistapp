@@ -31,29 +31,21 @@
               <a href="">
                 <img src="/static/images/menu.png" class="menu-icon">
               </a>
-        
-              <div class="dropdown">
-                <button class="dropbtn"> <!--- <img src="/static/images/menu.png"> -->
-                </button>
-                <div class="dropdown-content">
-                  <a href="/profile">HOME</a>
-                  <a href="/mybucketlists">BUCKETLISTS</a>
-                  <a href="/createbucketlist">CREATE BUCKETLIST</a>
-                </div>
-              </div>
             </div>
 
-        <div class="form"> <h2>First, Pick Your Destination.</h2> </div>
         <div class="main">
+            <h2>#1) Choose Your Destination.</h2>
             <form action="/travelform" method="POST">
-                <p>
-                    Enter Location: <input type="text" name="location" />
-                </p>
-                <p>
-                    Enter Location: <input id="autocomplete" placecholder="City, Country" type="text" />
-                </p>
-            <h2>Second, Choose Your Categories:</h2>
-                <div>
+                <br>
+                <div class="locat">
+                    <p>
+                        Location: <input type="search" placeholder="search" name="location" id="location_html" />
+                    </p>
+                </div>
+                <br>
+            <h2>#2) Select Your Categories.</h2>
+            <br>
+            <div class="cats1">
                 <select name="category1" id="category1_select">
                     <option value="N/A" disabled selected hidden>Choice #1</option>
                     <option value="park">Nature and Parks</option>
@@ -70,8 +62,9 @@
                     <option value="aquarium">Aquariums</option>
                     <option value="Other" id="category1_other">Other</option>
                 </select>
-                </div>
-                <div>
+            </div>
+            <br>
+            <div class="cats2">
                 <select name="category2" id="category2_select">
                     <option value="N/A" disabled selected hidden>Choice #2</option>
                     <option value="park">Nature and Parks</option>
@@ -88,8 +81,9 @@
                     <option value="aquarium">Aquariums</option>
                     <option value="Other" id="category2_other">Other</option>
                 </select>
-                </div>
-                <div>
+            </div>
+            <br>
+            <div class="cats3">
                 <select name="category3" id="category3_select">
                     <option value="N/A" disabled selected hidden>Choice #3</option>
                     <option value="park">Nature and Parks</option>
@@ -106,9 +100,10 @@
                     <option value="aquarium">Aquariums</option>
                     <option value="Other" id="category3_other">Other</option>
                 </select>
-                </div>
+            </div>
+            <br>
                 <p>
-                    <button id="categories_btn">Let's Go!</button>
+                    <button id="categories_btn">Submit!</button>
                 </p>
             </form>
         </div>

@@ -19,30 +19,18 @@
     <a href="">
       <img src="/static/images/menu.png" class="menu-icon">
     </a>
-
-    <div class="dropdown">
-      <button class="dropbtn"> <!--- <img src="/static/images/menu.png"> -->
-      </button>
-      <div class="dropdown-content">
-        <a href="/profile">HOME</a>
-        <a href="/mybucketlists">BUCKETLISTS</a>
-        <a href="/createbucketlist">CREATE BUCKETLIST</a>
-      </div>
-    </div>
   </div>
 
-  <h1>My Bucket Lists &#128221; </h1>
+  <h1>Bucket Lists</h1>
   
-    <div class="list">
-      {% for bucketlist in bucketlists %}
+  <div class="main">
+    {% for bucketlist in bucketlists | sort(attribute='location') %}
       <div id="div{{ bucketlist.bucketlist_id }}">
-        <a href="/bucketlist/{{ bucketlist.bucketlist_id }}"> {{ bucketlist.location }}</a>
-        <p> 
-          <button class="delete_button" id="{{ bucketlist.bucketlist_id }}">Delete</button>
-        </p>
+        <a class="link" href="/bucketlist/{{ bucketlist.bucketlist_id }}">{{ bucketlist.location }}</a>
+        <button class="delete_button" id="{{ bucketlist.bucketlist_id }}">X</button>
       </div>
-      {% endfor %}
-    </div>
+    {% endfor %}
+  </div>
 
-  <script src="/static/editbucketlist.js"></script>
+  <script src="/static/editbucketlist.js"></script> 
 {% endblock %}

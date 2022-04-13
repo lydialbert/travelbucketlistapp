@@ -1,33 +1,13 @@
 {% extends 'base.html' %}
-{% block title %}Travel Bucketlist App{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" type="text/css" href="/static/style.css"/>
-<style>
-  h1 {
-  text-align: center;
-  }
-  h3 {
-  text-align: center;
-  }
-  p {
-    text-align: center;
-  }
-</style>
+<link rel="stylesheet" type="text/css" href="/static/onebl.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 {% endblock %}
 
 {% block body %}
   <h1>~ {{ location }} ~</h1>
-
-  <div class="nav">
-    <ul>
-        <li><a href="/profile">My Profile</a></li>
-        <li><a href="/mybucketlists">My Bucketlists</a></li>
-        <li><a href="/createbucketlist">Create a New Bucketlist!</a></li>
-    </ul>
-  </div>
-
   {% for category in category_items %} 
     {% if category != [] %} 
       <h3>{{ category_names[loop.index0] }}</h3>
@@ -41,8 +21,10 @@
       </div>
     {% endif %} 
   {% endfor %}
-
-<div id="map"></div>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVSRqldNk1Cg3JJqg3YWhGRQ4SbjWFbRo&callback=initMap&v=weekly" async></script>
-<script src="/static/map.js"></script>
+  <p>
+    <button id="return">Return Home</button>
+  </p>
+  <div id="map"></div>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVSRqldNk1Cg3JJqg3YWhGRQ4SbjWFbRo&callback=initMap&v=weekly" async></script>
+  <script src="/static/map.js"></script>
 {% endblock %}
