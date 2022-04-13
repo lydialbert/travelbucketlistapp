@@ -1,0 +1,28 @@
+/* Suggestions Page Styling. */
+
+.card{
+    width: 200px;
+    height: 230px;
+    display: inline-block;
+    border-radius: 10px;
+    padding: 15px 25px;
+    box-sizing: border-box;
+    cursor: pointer;
+    margin: 10px 15px;
+    background-position: center;
+    background-size: cover;
+    transition: transform 0.5s;
+    text-align: center;
+}
+
+.card:hover{
+    transform: translateY(-10px);
+}
+
+h1 {
+    text-align: center;
+}
+
+.bucketlist_button {
+    text-align: center;
+}

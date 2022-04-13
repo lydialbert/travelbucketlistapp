@@ -244,6 +244,8 @@ def show_individual_bucketlist(bucketlist_id):
     category2_items = crud.get_item_title(bucketlist_id, bucketlist.category2)
     category3_items = crud.get_item_title(bucketlist_id, bucketlist.category3)
 
+    category_names = [travel_categories[session['category1']], travel_categories[session['category2']], travel_categories[session['category3']]]
+
     category_items = [category1_items, category2_items, category3_items]
 
     return render_template("bucketlist.html",
@@ -251,7 +253,8 @@ def show_individual_bucketlist(bucketlist_id):
     category1=bucketlist.category1,
     category2=bucketlist.category2,
     category3=bucketlist.category3,
-    category_items=category_items
+    category_items=category_items,
+    category_names=category_names,
     )
 
 @app.route("/status")
